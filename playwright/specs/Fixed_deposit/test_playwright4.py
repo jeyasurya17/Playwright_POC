@@ -1,20 +1,20 @@
-import time
+def test_alertBox(playwright_browser_context):
+    page = playwright_browser_context
+    alertBtn = page.locator("//input[@id='alertbtn']")
+    alertBtn.click()
+    def handle_alert(dialog):
+        assert "Hello" in dialog.message
+        dialog.accept()
 
-from playwright.sync_api import Page
+    page.on('dialog', handle_alert)
+    print("Executed Alert box test")
 
-def test_playwright4(playwright):
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
-    page.goto("https://www.google.com/")
+def test_confirmBox(playwright_browser_context):
+    page = playwright_browser_context
+    confirmBtn = page.locator("//input[@id='confirmbtn']")
+    confirmBtn.click()
+    def handle_confirm(dialog):
+        dialog.accept()
 
-
-def test_playwrightshortcut4(page:Page):
-
-    page.goto("https://rahulshettyacademy.com/loginpagePractise/")
-    page.get_by_label("Username:").fill("rahulshettyacademy")
-    page.get_by_label("Password:").fill("learning")
-    page.get_by_role("combobox").select_option("teach")
-    page.locator("#terms").click()
-    page.get_by_role("button",name="Sign in").click()
-    time.sleep(5)
+    page.on('dialog', handle_confirm)
+    print("Executed confirm box test")

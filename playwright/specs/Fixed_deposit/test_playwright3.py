@@ -1,20 +1,14 @@
-import time
+def test_selectDropdownOption(playwright_browser_context):
+    page = playwright_browser_context
+    page.select_option("select#dropdown-class-example",value="Option1")
+    selected_value =  page.locator("select#dropdown-class-example").input_value()
+    assert selected_value=="option1",f"But found {selected_value}"
+    print("Executed dropdpwn case")
 
-from playwright.sync_api import Page
-
-def test_playwright3(playwright):
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
-    page.goto("https://www.google.com/")
-
-
-def test_playwrightshortcut3(page:Page):
-
-    page.goto("https://rahulshettyacademy.com/loginpagePractise/")
-    page.get_by_label("Username:").fill("rahulshettyacademy")
-    page.get_by_label("Password:").fill("learning")
-    page.get_by_role("combobox").select_option("teach")
-    page.locator("#terms").click()
-    page.get_by_role("button",name="Sign in").click()
-    time.sleep(5)
+def test_openwindow(playwright_browser_context):
+    page = playwright_browser_context
+    openwindow_button = page.locator("//button[@id='openwindow']")
+    with page.expect_popup() as new_page: openwindow_button.click()
+    popupValue  = new_page.value
+    assert "QA" in popupValue.title()
+    print("Executed open new window")
