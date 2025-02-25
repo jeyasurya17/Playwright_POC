@@ -1,0 +1,7 @@
+Loan_module:
+  - playwright/specs/Loan_module/test_playwright1.py
+  - playwright/specs/Loan_module/test_playwright2.py
+
+Fixed_deposit:
+  - playwright/specs/Fixed_deposit/test_playwright3.py
+  - playwright/specs/Fixed_deposit/test_playwright4.py
