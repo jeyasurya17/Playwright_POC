@@ -16,6 +16,7 @@ else:
 # Read Environment Variables
 suites_to_run = os.getenv("SUITE", "").split(",") if os.getenv("SUITE") else []
 specs_to_run = os.getenv("SPEC", "").split(",") if os.getenv("SPEC") else []
+tags_to_run = os.getenv("TAGS", "").split(",") if os.getenv("TAGS") else []
 workers = os.getenv("WORKERS", "2")  # Default workers is 2
 
 # Locate and Load `suite.yaml`
@@ -39,6 +40,13 @@ elif suites_to_run:
         if suite in suite_data:
             test_paths.extend(suite_data[suite])
 
+#Tags to run
+
+if tags_to_run:
+    tags = " or ".join(tags_to_run)
+else:
+    tags =""
+
 # Convert Relative Paths to Absolute Paths
 test_paths = [os.path.abspath(os.path.join(script_dir, "..", path)) for path in test_paths]
 
@@ -46,6 +54,9 @@ test_paths = [os.path.abspath(os.path.join(script_dir, "..", path)) for path in 
 print("\n=== Debugging Information ===")
 print(f"SUITE env variable: {suites_to_run}")
 print(f"SPEC env variable: {specs_to_run}")
+print(f"TAGS env variable: {tags_to_run}")
+print(f"Tags = {tags}")
+
 print(f"Workers: {workers}")
 print(f"Test paths collected: {test_paths}")
 print("============================\n")
@@ -55,7 +66,8 @@ if test_paths:
     command = [
         "pytest",
         "-n", workers,                # Run with parallel workers
-     "--dist=loadfile",            # Ensure tests within the same file run in sequence
+        "-m",tags,
+     "--dist=loadgroup",            # Groups tests by custom group marks to ensure they run in the same worker.
         "--verbose",
         "--capture=no",
     ] + test_paths
