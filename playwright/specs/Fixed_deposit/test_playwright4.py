@@ -1,3 +1,6 @@
+import pytest
+
+
 def test_alertBox(playwright_browser_context):
     page = playwright_browser_context
     alertBtn = page.locator("//input[@id='alertbtn']")
@@ -9,6 +12,8 @@ def test_alertBox(playwright_browser_context):
     page.on('dialog', handle_alert)
     print("Executed Alert box test")
 
+@pytest.mark.smoke
+@pytest.mark.xdist_group(name="group3")
 def test_confirmBox(playwright_browser_context):
     page = playwright_browser_context
     confirmBtn = page.locator("//input[@id='confirmbtn']")

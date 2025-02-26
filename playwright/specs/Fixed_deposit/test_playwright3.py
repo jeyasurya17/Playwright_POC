@@ -1,9 +1,15 @@
+import pytest
+
+
+@pytest.mark.regression
+@pytest.mark.xdist_group(name="group2")
 def test_selectDropdownOption(playwright_browser_context):
     page = playwright_browser_context
     page.select_option("select#dropdown-class-example",value="Option1")
     selected_value =  page.locator("select#dropdown-class-example").input_value()
     assert selected_value=="option1",f"But found {selected_value}"
     print("Executed dropdpwn case")
+
 
 def test_openwindow(playwright_browser_context):
     page = playwright_browser_context
