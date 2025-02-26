@@ -1,20 +1,16 @@
-import time
+from playwright.sync_api import expect
 
-from playwright.sync_api import Page
-
-def test_playwright1(playwright):
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
-    page.goto("https://www.google.com/")
+def test_validateButtons(playwright_browser_context):
+    page = playwright_browser_context
+    buttons = page.locator(".btn-primary")
+    assert buttons.count() == 5
+    print("Executed validating buttons count test")
 
 
-def test_playwrightshortcut1(page:Page):
-
-    page.goto("https://rahulshettyacademy.com/loginpagePractise/")
-    page.get_by_label("Username:").fill("rahulshettyacademy")
-    page.get_by_label("Password:").fill("learning")
-    page.get_by_role("combobox").select_option("teach")
-    page.locator("#terms").click()
-    page.get_by_role("button",name="Sign in").click()
-    time.sleep(5)
+def test_selectRadioButton(playwright_browser_context):
+    page = playwright_browser_context
+    radioButton = page.locator("//input[@name= 'radioButton']")
+    radioButton_list = radioButton.all()
+    radioButton_list[1].click()
+    expect(radioButton_list[1]).to_be_checked()
+    print("Executed selecting radio button test")

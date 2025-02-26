@@ -1,24 +1,13 @@
-# import json
-import time
 
-from playwright.sync_api import Page
+def test_validatePageHeaderValue(playwright_browser_context):
+    page = playwright_browser_context
+    headervalue = page.locator("//h1").text_content()
+    assert headervalue == 'Practice Page',f"But found {headervalue}"
+    print("Executed validating header value test")
 
-
-def test_playwright2(playwright):
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
-    page.goto("https://www.google.com/")
-
-
-def test_playwrightshortcut2(page:Page):
-     # with open('Data/credentials.json') as f:
-     #     test_Data = json.load(f)
-     #      # print(test_Data)
-    page.goto("https://rahulshettyacademy.com/loginpagePractise/")
-    page.get_by_label("Username:").fill("rahulshettyacademy")
-    page.get_by_label("Password:").fill("learning")
-    page.get_by_role("combobox").select_option("teach")
-    page.locator("#terms").click()
-    page.get_by_role("button",name="Sign in").click()
-    time.sleep(5)
+def test_selectCheckBox(playwright_browser_context):
+    page = playwright_browser_context
+    checkbox = page.locator("//input[@id='checkBoxOption1']")
+    checkbox.click()
+    assert checkbox.is_checked() is True,"checkbox should be checked"
+    print("Executed selecting checkbox test")
