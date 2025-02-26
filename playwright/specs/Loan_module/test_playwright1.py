@@ -26,7 +26,7 @@ def test_selectRadioButton(playwright_browser_context):
 @pytest.mark.sanity
 @pytest.mark.xdist_group(name="group1")
 def test_playwright_saucelabs(playwright):
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(channel="msedge",headless=False)
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://www.saucedemo.com/")
