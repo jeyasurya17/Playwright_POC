@@ -61,7 +61,7 @@ print(f"Workers: {workers}")
 print(f"Test paths collected: {test_paths}")
 print("============================\n")
 
-# Run tests in parallel at the **suite level**, but sequentially within a suite
+# Run tests in parallel at the **suite level**
 if test_paths:
     command = [
         "pytest",
