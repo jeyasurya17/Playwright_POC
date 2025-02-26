@@ -65,6 +65,7 @@ print("============================\n")
 if test_paths:
     command = [
         "pytest",
+        "--alluredir=allure-results",
         "-n", workers,                # Run with parallel workers
         "-m",tags,
     # "--dist=loadgroup",            # Groups tests by custom group marks to ensure they run in the same worker.

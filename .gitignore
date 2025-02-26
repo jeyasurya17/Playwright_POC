@@ -1,0 +1,14 @@
+.allure
+schema
+/*/allure-results/
+/*/allure-report/
+
+out
+
+#IDEA Files
+.idea/*
+*.iml
+*.ipr
+
+#Mac OS stuff
+.DS_Store
