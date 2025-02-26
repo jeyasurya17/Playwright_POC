@@ -17,3 +17,10 @@ def test_selectCheckBox(playwright_browser_context):
     checkbox.click()
     assert checkbox.is_checked() is True,"checkbox should be checked"
     print("Executed selecting checkbox test")
+
+
+def test_playwright_saucelabs2(playwright):
+    browser = playwright.chromium.launch(headless=False)
+    context = browser.new_context()
+    page = context.new_page()
+    page.goto("https://www.saucedemo.com/")

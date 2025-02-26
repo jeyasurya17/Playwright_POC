@@ -67,7 +67,7 @@ if test_paths:
         "pytest",
         "-n", workers,                # Run with parallel workers
         "-m",tags,
-     "--dist=loadgroup",            # Groups tests by custom group marks to ensure they run in the same worker.
+    # "--dist=loadgroup",            # Groups tests by custom group marks to ensure they run in the same worker.
         "--verbose",
         "--capture=no",
     ] + test_paths
