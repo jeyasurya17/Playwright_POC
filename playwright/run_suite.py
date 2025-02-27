@@ -19,16 +19,23 @@ specs_to_run = os.getenv("SPEC", "").split(",") if os.getenv("SPEC") else []
 tags_to_run = os.getenv("TAGS", "").split(",") if os.getenv("TAGS") else []
 workers = os.getenv("WORKERS", "2")  # Default workers is 2
 
-# Locate and Load `suite.yaml`
+# Locate and Load `suite.yaml` for fallback
 suite_yaml_path = os.path.join(script_dir, "suite.yaml")
-if not os.path.exists(suite_yaml_path):
-    print(f"Error: suite.yaml not found at {suite_yaml_path}. Exiting...")
-    exit(1)
+if os.path.exists(suite_yaml_path):
+    with open(suite_yaml_path, "r") as file:
+        suite_data = yaml.safe_load(file)
+    print(f" Loaded suite.yaml from: {suite_yaml_path}")
+else:
+    print(f" Warning: suite.yaml not found. Running dynamically discovered tests.")
 
-with open(suite_yaml_path, "r") as file:
-    suite_data = yaml.safe_load(file)
-    print(f"Loaded suite.yaml from: {suite_yaml_path}")
-    print(f"Suite Data: {suite_data}")
+# Function to dynamically get all test files inside a suite folder
+def get_test_files(suite_name):
+    suite_path = os.path.join(script_dir, "specs", suite_name)
+    if os.path.exists(suite_path):
+        return [os.path.join(suite_path, f) for f in os.listdir(suite_path) if f.endswith(".py")]
+    else:
+        print(f"Warning: Suite folder {suite_path} not found.")
+        return []
 
 # Collect Test Paths Based on ENV Variables
 test_paths = []
@@ -38,7 +45,11 @@ if specs_to_run:
 elif suites_to_run:
     for suite in suites_to_run:
         if suite in suite_data:
+            # If suite is in suite.yaml, use it
             test_paths.extend(suite_data[suite])
+        else:
+            # Otherwise, dynamically discover all test files inside the folder
+            test_paths.extend(get_test_files(suite))
 
 #Tags to run
 
@@ -47,8 +58,11 @@ if tags_to_run:
 else:
     tags =""
 
+# # Convert Relative Paths to Absolute Paths
+# test_paths = [os.path.abspath(os.path.join(script_dir, "..", path)) for path in test_paths]
+
 # Convert Relative Paths to Absolute Paths
-test_paths = [os.path.abspath(os.path.join(script_dir, "..", path)) for path in test_paths]
+test_paths = [os.path.abspath(path) for path in test_paths]
 
 # Debugging Prints
 print("\n=== Debugging Information ===")
@@ -67,7 +81,7 @@ if test_paths:
         "pytest",
         "-n", workers,                # Run with parallel workers
         "-m",tags,
-    # "--dist=loadgroup",            # Groups tests by custom group marks to ensure they run in the same worker.
+        "--dist=loadgroup",            # Groups tests by custom group marks to ensure they run in the same worker.
         "--verbose",
         "--capture=no",
     ] + test_paths
