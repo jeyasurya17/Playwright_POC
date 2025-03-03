@@ -1,8 +1,11 @@
 import pytest
 
+from Playwright_POC.playwright.conftest import regression
 
-@pytest.mark.regression
-@pytest.mark.xdist_group(name="group2")
+
+#@pytest.mark.regression
+#@pytest.mark.xdist_group(name="group2")
+@regression
 def test_selectDropdownOption(playwright_browser_context):
     page = playwright_browser_context
     page.select_option("select#dropdown-class-example",value="Option1")

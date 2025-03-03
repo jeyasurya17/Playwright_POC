@@ -1,6 +1,9 @@
 import pytest
 
+from Playwright_POC.playwright.conftest import smoke, smokeandregression
 
+@smoke
+#@pytest.mark.smokeandregression
 def test_alertBox(playwright_browser_context):
     page = playwright_browser_context
     alertBtn = page.locator("//input[@id='alertbtn']")
@@ -12,8 +15,9 @@ def test_alertBox(playwright_browser_context):
     page.on('dialog', handle_alert)
     print("Executed Alert box test")
 
-@pytest.mark.smoke
-@pytest.mark.xdist_group(name="group3")
+#@pytest.mark.smoke
+#@pytest.mark.xdist_group(name="group3")
+@smoke
 def test_confirmBox(playwright_browser_context):
     page = playwright_browser_context
     confirmBtn = page.locator("//input[@id='confirmbtn']")

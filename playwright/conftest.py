@@ -16,3 +16,33 @@ def playwright_browser_context(playwright : Playwright,request):
     yield page
     page.close()
     browser.close()
+
+def sanity(func):
+    """Custom decorator to apply multiple pytest markers."""
+    func = pytest.mark.sanity(func)
+    func = pytest.mark.xdist_group(name="group1")(func)
+    return func
+
+def regression(func):
+    """Custom decorator to apply multiple pytest markers."""
+    func = pytest.mark.regression(func)
+    func = pytest.mark.xdist_group(name="group2")(func)
+    return func
+
+def smoke(func):
+    """Custom decorator to apply multiple pytest markers."""
+    func = pytest.mark.smoke(func)
+    func = pytest.mark.xdist_group(name="group3")(func)
+    return func
+
+#Not a working solution currently
+def smokeandregression(func):
+    """Custom decorator to apply multiple pytest markers."""
+    func = pytest.mark.regression(func)
+    func = pytest.mark.xdist_group(name="group2")(func)
+    func = pytest.mark.smoke(func)
+    func = pytest.mark.xdist_group(name="group3")(func)
+    return func
+
+
+
