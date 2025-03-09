@@ -1,6 +1,6 @@
 import pytest
 
-from Playwright_POC.playwright.conftest import smoke, smokeandregression
+from Playwright_POC.conftest import smoke, smokeandregression
 
 @smoke
 #@pytest.mark.smokeandregression

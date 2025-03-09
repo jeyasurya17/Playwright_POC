@@ -1,6 +1,6 @@
 import pytest
 
-from Playwright_POC.playwright.conftest import regression
+from Playwright_POC.conftest import regression
 
 
 #@pytest.mark.regression

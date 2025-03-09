@@ -1,7 +1,9 @@
+import logging
+
 import pytest
 from playwright.sync_api import expect
 
-from Playwright_POC.playwright.conftest import regression, sanity
+from Playwright_POC.conftest import regression, sanity
 
 #@pytest.mark.regression
 #@pytest.mark.xdist_group(name="group2")
@@ -10,7 +12,8 @@ def test_validateButtons(playwright_browser_context):
     page = playwright_browser_context
     buttons = page.locator(".btn-primary")
     assert buttons.count() == 5
-    print("Executed validating buttons count test")
+    #print("Executed validating buttons count test")
+    logging.info("Executed validating radio button test")
 
 
 
