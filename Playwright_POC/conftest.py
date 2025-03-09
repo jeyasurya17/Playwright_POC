@@ -1,4 +1,6 @@
-from playwright.sync_api import Playwright
+
+
+from playwright.sync_api import Playwright, sync_playwright
 import pytest
 import os
 
@@ -7,15 +9,29 @@ def pytest_runtest_protocol(item, nextitem):
     print(f" Running {item.name} on Worker {worker_id}")
     return None
 
+# @pytest.fixture(scope="function")
+# def playwright_browser_context(playwright : Playwright,request):
+#     #browser = playwright.chromium.launch( channel="msedge",headless=False)
+#     browser = playwright.chromium.launch(headless=False)
+#     context = browser.new_context()
+#     page =  context.new_page()
+#     page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+#     yield page
+#     page.close()
+#     browser.close()
+
+
 @pytest.fixture(scope="function")
-def playwright_browser_context(playwright : Playwright,request):
-    browser = playwright.chromium.launch( channel="msedge",headless=False)
-    context = browser.new_context()
-    page =  context.new_page()
-    page.goto("https://rahulshettyacademy.com/AutomationPractice/")
-    yield page
-    page.close()
-    browser.close()
+def playwright_browser_context(base_url):
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=False)
+        page = browser.new_page()
+        #print(f"base_url : {base_url}")
+        #page.goto(base_url)
+        page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+        yield page
+        page.close()
+        browser.close()
 
 def sanity(func):
     """Custom decorator to apply multiple pytest markers."""
@@ -43,6 +59,5 @@ def smokeandregression(func):
     func = pytest.mark.smoke(func)
     func = pytest.mark.xdist_group(name="group3")(func)
     return func
-
 
 
