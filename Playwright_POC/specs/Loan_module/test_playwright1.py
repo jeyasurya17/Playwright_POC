@@ -1,9 +1,8 @@
 import logging
 
-import pytest
 from playwright.sync_api import expect
 
-from Playwright_POC.conftest import regression, sanity
+from Playwright_POC.conftest import regression,sanity
 
 #@pytest.mark.regression
 #@pytest.mark.xdist_group(name="group2")
@@ -26,7 +25,8 @@ def test_selectRadioButton(playwright_browser_context):
     radioButton_list = radioButton.all()
     radioButton_list[1].click()
     expect(radioButton_list[1]).to_be_checked()
-    print("Executed selecting radio button test")
+    #print("Executed selecting radio button test")
+    logging.info("Executed selecting radio button test")
 
 
 #@pytest.mark.sanity

@@ -1,5 +1,4 @@
 import pytest
-
 from Playwright_POC.conftest import regression
 
 
