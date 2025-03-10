@@ -8,13 +8,13 @@ import webbrowser
 def run_tests():
 # Load Environment Variables
     script_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of run_suite.py
-    env_path = os.path.join(script_dir, "env.env")  # Path to env file
+    env_path = os.path.join(script_dir, ".env")  # Path to env file
 
     if os.path.exists(env_path):
         load_dotenv(env_path)
         print(f"Loaded environment variables from: {env_path}")
     else:
-        print(f"Warning: env.env not found at {env_path}. Ensure it exists.")
+        print(f"Warning: .env not found at {env_path}. Ensure it exists.")
 
     # Read Environment Variables
     suites_to_run = os.getenv("SUITE", "").split(",") if os.getenv("SUITE") else []
@@ -89,7 +89,7 @@ def generate_allure_report():
     """Generate and open Allure report automatically."""
 
     try:
-        subprocess.run(["allure", "generate", "allure-results", "-o", "allure-report", "--clean"], check=True)
+        subprocess.run(["allure", "generate", "allure-results", "-o", "allure-report", "--clean","--single-file"], check=True)
         print("Allure report generated successfully!")
 
         # Open the report automatically

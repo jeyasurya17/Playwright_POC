@@ -1,8 +1,11 @@
+.env
+
 .allure
 schema
 /*/allure-results/
 /*/allure-report/
 
+/playwright/.env
 out
 
 #IDEA Files

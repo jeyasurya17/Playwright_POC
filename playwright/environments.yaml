@@ -1,0 +1,8 @@
+qa:
+  url: "https://rahulshettyacademy.com/AutomationPractice/"
+
+dev:
+  url: "https://dev.example.com"
+
+stage:
+  url: "https://stage.example.com"
