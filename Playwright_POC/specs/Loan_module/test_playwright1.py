@@ -2,7 +2,8 @@ import logging
 
 from playwright.sync_api import expect
 
-from Playwright_POC.conftest import regression,sanity
+from Playwright_POC.conftest import regression, sanity
+
 
 #@pytest.mark.regression
 #@pytest.mark.xdist_group(name="group2")
